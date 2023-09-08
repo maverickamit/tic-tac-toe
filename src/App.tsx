@@ -1,9 +1,9 @@
 import "./App.css";
-
+import Box from "./components/box";
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
+      <Box input="X" />
     </>
   );
 }
