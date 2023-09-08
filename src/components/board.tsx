@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Box from "./box";
+import { useEffect, useState } from "react";
 
 const StyledBoard = styled.div`
   display: grid;
@@ -11,11 +12,13 @@ const StyledBoard = styled.div`
 const arr = [...Array(9)];
 
 const Board = () => {
+  const [userSelection, setUserSelection] = useState<number[]>([]);
+
   return (
     <>
       <StyledBoard>
-        {arr.map(() => (
-          <Box input="" />
+        {arr.map((_, index) => (
+          <Box {...{ input: "", setUserSelection, index }} key={index} />
         ))}
       </StyledBoard>
     </>

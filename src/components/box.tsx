@@ -1,7 +1,10 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 
 interface BoxProps {
   input: string;
+  setUserSelection: React.Dispatch<React.SetStateAction<number[]>>;
+  index: number;
 }
 
 const StyledBox = styled.div`
@@ -17,10 +20,19 @@ const StyledBox = styled.div`
   user-select: none;
 `;
 
-const Box = ({ input }: BoxProps) => {
+const Box = ({ input, setUserSelection, index }: BoxProps) => {
+  const [selection, setSelection] = useState(input);
+
+  const handleBoxOnClick = () => {
+    if (selection === "") {
+      setSelection("X");
+      setUserSelection((prevState: number[]) => [...prevState, index]);
+    }
+  };
+
   return (
     <>
-      <StyledBox>{input}</StyledBox>
+      <StyledBox onClick={handleBoxOnClick}>{selection}</StyledBox>
     </>
   );
 };
