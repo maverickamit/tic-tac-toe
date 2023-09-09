@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface BoxProps {
@@ -22,9 +22,12 @@ const StyledBox = styled.div`
 
 const Box = ({ input, setUserSelection, index }: BoxProps) => {
   const [selection, setSelection] = useState(input);
+  useEffect(() => {
+    setSelection(input);
+  }, [input]);
 
   const handleBoxOnClick = () => {
-    if (selection === "") {
+    if (input === "") {
       setSelection("X");
       setUserSelection((prevState: number[]) => [...prevState, index]);
     }
