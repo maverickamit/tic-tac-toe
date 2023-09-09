@@ -19,6 +19,7 @@ const Board = () => {
   const [computerSelection, setComputerSelection] = useState<number[]>([]);
   const [inputValues, setInputValues] = useState<string[]>(arr.map(() => "")); // Initialize with empty string values
   const [winner, setWinner] = useState<string | null>(null); // Track the winner
+  const [isUserTurn, setIsUserTurn] = useState(true);
 
   useEffect(() => {
     if (userSelection.length > 0) {
@@ -42,6 +43,10 @@ const Board = () => {
   }, [userSelection]);
 
   useEffect(() => {
+    setIsUserTurn(true);
+  }, [computerSelection]);
+
+  useEffect(() => {
     const newInputValues = arr.map((_, index) =>
       getInput(userSelection, computerSelection, index)
     );
@@ -63,6 +68,8 @@ const Board = () => {
           <Box
             {...{
               input: inputValues[index],
+              isUserTurn,
+              setIsUserTurn,
               setUserSelection,
               setComputerSelection,
               index,

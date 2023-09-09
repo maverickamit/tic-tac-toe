@@ -4,6 +4,8 @@ import styled from "styled-components";
 interface BoxProps {
   input: string;
   setUserSelection: React.Dispatch<React.SetStateAction<number[]>>;
+  isUserTurn: boolean;
+  setIsUserTurn: React.Dispatch<React.SetStateAction<boolean>>;
   index: number;
 }
 
@@ -20,14 +22,21 @@ const StyledBox = styled.div`
   user-select: none;
 `;
 
-const Box = ({ input, setUserSelection, index }: BoxProps) => {
+const Box = ({
+  input,
+  setUserSelection,
+  isUserTurn,
+  setIsUserTurn,
+  index,
+}: BoxProps) => {
   const [selection, setSelection] = useState(input);
   useEffect(() => {
     setSelection(input);
   }, [input]);
 
   const handleBoxOnClick = () => {
-    if (input === "") {
+    if (input === "" && isUserTurn) {
+      setIsUserTurn(false);
       setSelection("X");
       setUserSelection((prevState: number[]) => [...prevState, index]);
     }
