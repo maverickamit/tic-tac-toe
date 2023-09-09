@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 interface BoxProps {
@@ -22,31 +22,27 @@ const StyledBox = styled.div`
   user-select: none;
 `;
 
-const Box = ({
-  input,
-  setUserSelection,
-  isUserTurn,
-  setIsUserTurn,
-  index,
-}: BoxProps) => {
-  const [selection, setSelection] = useState(input);
-  useEffect(() => {
-    setSelection(input);
-  }, [input]);
+const Box = React.memo(
+  ({ input, setUserSelection, isUserTurn, setIsUserTurn, index }: BoxProps) => {
+    const handleBoxOnClick = () => {
+      if (input === "" && isUserTurn) {
+        setIsUserTurn(false);
+        setUserSelection((prevState: number[]) => [...prevState, index]);
+      }
+    };
 
-  const handleBoxOnClick = () => {
-    if (input === "" && isUserTurn) {
-      setIsUserTurn(false);
-      setSelection("X");
-      setUserSelection((prevState: number[]) => [...prevState, index]);
-    }
-  };
-
-  return (
-    <>
-      <StyledBox onClick={handleBoxOnClick}>{selection}</StyledBox>
-    </>
-  );
-};
+    return (
+      <>
+        <StyledBox onClick={handleBoxOnClick}>{input}</StyledBox>
+      </>
+    );
+  },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.input === nextProps.input &&
+      prevProps.isUserTurn === nextProps.isUserTurn
+    );
+  }
+);
 
 export default Box;
